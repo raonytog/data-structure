@@ -23,6 +23,10 @@ int main () {
         printf("\n");
     }
 
+    // desaloca o ** e o vet
+    free(vet);
+    free(matriz);
+
     return 0;
 }
 
@@ -41,8 +45,8 @@ int** inverte2 (int n, int* vet) {
 
     // ordena os enderecos de memoria
     int temp = 0;
-    for (int i = 0; i < n; i++) {
-        for (int j = i+1; i < n; i++) {
+    for (int i = 0; i < n-1; i++) {
+        for (int j = i+1; j < n-1; j++) {
             if (ans[1][i] > ans[1][j]) {
                 temp = ans[1][i];
                 ans[1][i] = ans[1][j];
