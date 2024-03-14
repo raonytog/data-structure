@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define PI 3.14
 
@@ -40,16 +41,12 @@ void inverte (int n, int* vet) {
 }
 
 double avalia (double* poli, int grau, double x) {
-    if (!poli) return 0;
-    double ans = 0, multiply = 1;
-    ans += poli[0];
-    ans += poli[1] * x;
-
-    for (int i = 1; i <= grau; i++) {
-        multiply *= grau;
+    int grauAux = grau;
+    double ans = 0;
+    for (int i = 0; i < grau+1; i++) {
+        if (grauAux > 0) ans += poli[i] * pow(x, grauAux--);
+        else ans += poli[i];
     }
-
-    ans += poli[2] * multiply;
     return ans;
 }
 
@@ -129,12 +126,22 @@ double avalia (double* poli, int grau, double x) {
 /**
  * 2.5
 */
-// int main () {
-//     double *vet = malloc(3 * sizeof(double));
-//     vet[0] = 10, vet[1] = 1, vet[2] = 0;
+int main () {
+    printf("Type the degree: ");
+    int degree = 0;       scanf("%d", &degree);
+    double *vet = malloc((degree + 1) * sizeof(double));
 
-//     double x = 2, grau = 2;
-//     double ans = avalia(vet, grau, x);
-//     printf("O resultado da avaliacao do polinomio eh %.2lf\n", ans);
-//     return 0;
-// }
+    double value = 0, x = 0;
+    for (int i = 0; i < degree+1; i++) {
+        printf("Type a value %d: ", i+1);
+        scanf("%lf", &value);
+        vet[i] = value;
+    }
+
+    printf("Type de x value: ");
+    scanf("%lf", &x);
+
+    double ans = avalia(vet, degree, x);
+    printf("The polynom result is: %.2lf\n", ans);
+    return 0;
+}
