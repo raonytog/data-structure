@@ -25,11 +25,18 @@ int main () {
 
     // desaloca o ** e o vet
     free(vet);
+    for (int i = 0; i < 2; i++) {
+        free(matriz[i]);
+    }
     free(matriz);
 
     return 0;
 }
 
+/**
+ * Retorna uma nova matriz, com o vetor inicial e outro vetor com o 
+ * endereco de cada posicao do vetor, de forma ordenada crescente
+*/
 int** inverte2 (int n, int* vet) {
     // aloca a matriz resposta
     int ** ans = malloc(2 * sizeof(int *));
