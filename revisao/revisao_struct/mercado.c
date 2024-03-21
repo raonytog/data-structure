@@ -6,7 +6,7 @@ typedef struct tSupermercado {
     tFiliais ** filiais;
 } tSupermercado;
 
-tSupermercado * CriaSupermercado() {
+tSupermercado * CriaSupermercado(tProduto **lp) {
     tSupermercado * sm = malloc(sizeof(tSupermercado));
     char temp[100];
     printf("DIGITE O NOME DO SUPERMERCADO:\n");

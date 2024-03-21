@@ -3,10 +3,11 @@
 #include <string.h>
 
 #include "mercado.h"
+#include "produto.h"
 
 int main () {
-    printf("Vamos criar um super mercado!\n");
-    tSupermercado * spm = CriaSupermercado();
+    tProduto ** listaProdutos = CadastraListraDeProdutos();
+    tSupermercado * spm = CriaSupermercado(listaProdutos);
     ImprimeSuperMercado(spm);
     LiberaSuperMercado(spm);
     return 0;
