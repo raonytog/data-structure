@@ -1,48 +1,67 @@
 #include "produto.h"
 
 typedef struct tProduto {
-    int valor;
+    int valor, qtd;
     char * nome;
 } tProduto;
 
-tProduto ** CadastraListraDeProdutos() {
-    tProduto ** lp;      char nomeProdTemp[100];
+tProduto ** CadastraListraDeProdutos(int *sizeLP) {
+    int qtdProdTemp = 0, qtdProdReal = 0, price = 0;
 
-    int qtdProdTemp = 0, qtdProdReal = 0;
-    printf("DIGITE QTD PRODUTOS QUER CADASTRAR");
-    scanf("%d", &qtdProdTemp);  lp = malloc(qtdProdTemp * sizeof(tProduto*));
-    
-    int qtdProd = 0, val = 0;       scanf("%d", &qtdProd);
-    for(int i=0;i<qtdProd;i++) {
-        scanf("%[^,], %d", nomeProdTemp, &val);
+    printf("Digite a qtd de produtos: ");
+    scanf("%d%*c", &qtdProdTemp);
+    tProduto ** lp = malloc(qtdProdTemp * sizeof(tProduto*));
+
+    char nomeProdTemp[100];
+    for(int i=0;i<qtdProdTemp;i++) {
+        printf("Digite o nome do produto: ");   scanf("%[^\n]%*c", nomeProdTemp);
         if (!EstaCadastradoProduto(nomeProdTemp, lp, qtdProdReal)) {
-            lp[i] = CriaProduto(nomeProdTemp, val);
+            lp[qtdProdReal] = malloc(sizeof(tProduto*));
+            lp[qtdProdReal]->nome = strdup(nomeProdTemp);
+
+            printf("\tDigite o preco de/da %s: ", lp[qtdProdReal]->nome); scanf("%d%*c", &price);
+            lp[qtdProdReal]->valor = price;
+            
             qtdProdReal++;
         }
-        else printf("PRODUTO JA CADASTRADO\n");
+        else printf("Produto ja cadastrado\n");
     }
 
-    if (qtdProdReal != qtdProdTemp) realloc(lp, qtdProdReal);
+    if (qtdProdReal != qtdProdTemp) lp = realloc(lp, qtdProdReal);
+    *sizeLP = qtdProdReal;
+    printf("\n\n");
     return lp;
 }
 
-tProduto * CriaProduto(char *s, int v) {
+tProduto * CriaProduto(char *s) {
     tProduto * p = malloc(sizeof(tProduto));
     p->nome = strdup(s);
-    p->valor = v;
     return p;
 }
 
 void LiberaProduto(tProduto * p) {
-    free(p->nome);
     free(p);
 }
 
 void ImprimeProduto(tProduto * p) {
-    printf("\t\tItem: %s, valor unitario: %d, quantidade: %d\n", p->nome, p->valor);
+    printf("\t\tItem: %s, valor unitario: %d, quantidade: %d\n", p->nome, p->valor, p->qtd);
 }
 
 int EstaCadastradoProduto (char *s, tProduto **p, int qtdP) {
     for (int i=0;i<qtdP;i++) if (strcmp(s, p[i]->nome) == 0) return 1;
     return 0;
+}
+
+int RetornaEstoqueProduto(tProduto *p) {
+    return p->qtd;
+}
+
+int RetornaPrecoProduto(tProduto *p) {
+    return p->valor;
+}
+
+void AtribuiEstoqueProduto(tProduto *p) {
+    int stock = 0;
+    printf("\tDigte o estoque do produto %s: ", p->nome);    scanf("%d%*c", &stock);
+    p->qtd = stock;
 }

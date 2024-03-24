@@ -7,32 +7,35 @@ typedef struct tFiliais {
     tProduto ** produtos;
 } tFiliais;
 
-tFiliais * CriaFiliais() {
+tFiliais * CriaFiliais(tProduto ** lp, int sizeLP) {
     tFiliais * f = malloc(sizeof(tFiliais));
-    f->qtdEstoque = 0;
-
+    f->qtdProduto = sizeLP;
     char temp[100];
     printf("DIGITE O NOME DA FILIAL: ");
     scanf("%[^\n]%*c", temp);
     f->nome = strdup(temp);
+    f->qtdEstoque = 0;
+    f->produtos = malloc(sizeLP * sizeof(tProduto*));
+    for (int i=0;i<sizeLP;i++) {
+        f->produtos[i] = malloc(sizeof(tProduto*));
+        f->produtos[i] = lp[i];
+    }
 
-    printf("DIGITE A QTD DE PRODUTOS: ");
-    scanf("%d%*c", &f->qtdProduto);
-
-    f->produtos = malloc(f->qtdProduto * sizeof(tProduto*));
-    for (int i = 0; i < f->qtdProduto; i++)
-        f->produtos[i] = CriaProduto();
+    for (int i=0;i<sizeLP;i++) 
+        AtribuiEstoqueProduto(f->produtos[i]);
 
     CalculaEstoqueFilial(f);
     printf("\n");
+
     return f;
 }
 
-void LiberaFiliais(tFiliais * f) {
-    free(f->nome);
-    for (int i = 0; i< f->qtdProduto; i++)
-        LiberaProduto(f->produtos[i]);
-    free(f->produtos);
+void LiberaFiliais(tFiliais ** f, int sizeF) {
+
+    for (int i=0;i<sizeF;i++) {
+        free(f[i]);
+    }
+    free(f);
 }
 
 void ImprimeFilial (tFiliais * f) {
@@ -43,7 +46,7 @@ void ImprimeFilial (tFiliais * f) {
 
 void CalculaEstoqueFilial (tFiliais * f) {
     for (int i = 0; i < f->qtdProduto; i++) {
-        f->qtdEstoque += RetornaEstoqueProduto(f->produtos[i]);
+        f->qtdEstoque += RetornaEstoqueProduto(f->produtos[i]) * RetornaPrecoProduto(f->produtos[i]);
     }
 }
 

@@ -6,19 +6,21 @@ typedef struct tSupermercado {
     tFiliais ** filiais;
 } tSupermercado;
 
-tSupermercado * CriaSupermercado(tProduto **lp) {
+tSupermercado * CriaSupermercado(tProduto **lp, int sizeLP) {
     tSupermercado * sm = malloc(sizeof(tSupermercado));
+
+    printf("Digite o nome do super mercado:\n");
     char temp[100];
-    printf("DIGITE O NOME DO SUPERMERCADO:\n");
     scanf("%[^\n]%*c", temp);
     sm->nome = strdup(temp);
+    printf("\n");
 
-    printf("DIGITE A QTD DE FILIAIS: ");
+    printf("Digite a qtd de filiais: ");
     scanf("%d%*c", &sm->qtdFiliais);
 
     sm->filiais = malloc(sm->qtdFiliais * sizeof(tFiliais*));
     for (int i = 0; i < sm->qtdFiliais; i++) {
-        sm->filiais[i] = CriaFiliais();
+        sm->filiais[i] = CriaFiliais(lp, sizeLP);
         sm->qtdEstoque += ObtemEstoqueFilial(sm->filiais[i]);
     }
     printf("\n");
@@ -27,9 +29,7 @@ tSupermercado * CriaSupermercado(tProduto **lp) {
 
 void LiberaSuperMercado (tSupermercado * sm) {
     free(sm->nome);
-    for (int i = 0; i < sm->qtdFiliais; i++)
-        LiberaFiliais(sm->filiais[i]);
-    free(sm->filiais);
+    LiberaFiliais(sm->filiais, sm->qtdFiliais);
     free(sm);
 }
 

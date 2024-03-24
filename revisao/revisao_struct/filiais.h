@@ -9,8 +9,8 @@
 
 typedef struct tFiliais tFiliais;
 
-tFiliais * CriaFiliais();
-void LiberaFiliais(tFiliais * f);
+tFiliais * CriaFiliais(tProduto ** lp, int sizeLP);
+void LiberaFiliais(tFiliais ** f, int sizeLP);
 void ImprimeFilial (tFiliais * f);
 void CalculaEstoqueFilial (tFiliais * f);
 int ObtemEstoqueFilial (tFiliais * f);

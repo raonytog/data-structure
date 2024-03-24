@@ -10,7 +10,7 @@
 typedef struct tSupermercado tSupermercado;
 
 
-tSupermercado * CriaSupermercado(tProduto ** lp);
+tSupermercado * CriaSupermercado(tProduto ** lp, int sizeLP);
 void LiberaSuperMercado (tSupermercado * sm);
 void ImprimeSuperMercado (tSupermercado * sm);
 
