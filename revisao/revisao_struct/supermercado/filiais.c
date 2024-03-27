@@ -16,6 +16,7 @@ tFiliais * CriaFiliais(tProduto ** lp, int sizeLP) {
     f->nome = strdup(temp);
     f->qtdEstoque = 0;
     f->produtos = malloc(sizeLP * sizeof(tProduto*));
+    
     for (int i=0;i<sizeLP;i++) {
         f->produtos[i] = malloc(sizeof(tProduto*));
         f->produtos[i] = lp[i];
