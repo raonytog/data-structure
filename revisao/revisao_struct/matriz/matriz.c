@@ -57,7 +57,10 @@ void modificaElemento (Matriz* mat, int linha, int coluna, int elem) {
  */
 int recuperaElemento(Matriz* mat, int linha, int coluna) {
     if (!mat) return 0;
-    if (linha <= 0 || coluna <= 0) printf("A linha e/ou a coluna nao eh valida");
+    if (linha <= 0 || coluna <= 0) {
+        printf("A linha e/ou a coluna nao eh valida");
+        exit(1);
+    }
     return mat->grid[linha * mat->nCols + coluna];
 }
 
@@ -102,8 +105,15 @@ Matriz* multiplicacao (Matriz* mat1, Matriz* mat2) {
     if (!mat1 || !mat2) return NULL;
     if (mat1->nCols != mat2->nRows) return NULL;
 
-    for(int m = 0; m < mat1->nRows; m++) {
-        for(int )
+    Matriz * ans = malloc( (mat1->nRows * mat2->nCols) * sizeof(int));
+    ans->nRows = mat1->nRows;                ans->nCols = mat2->nCols;
+
+    for(int m = 0; m < recuperaNLinhas(mat1); m++) {
+        for(int n = 0; n < recuperaNColunas(mat1); n++) {
+            for (int r = 0; r < recuperaNColunas(mat2); r++) {
+
+            }
+        }
     }
 }
 
@@ -114,6 +124,7 @@ Matriz* multiplicacao (Matriz* mat1, Matriz* mat2) {
  * pos-condicao: nenhuma
  */
 void imprimeMatriz(Matriz* mat) {
+    if (!mat) return;
     for (int i = 0; i< mat->nRows; i++) {
         printf("\n");
         for (int j = 0 ; j <mat->nCols; j++) {
