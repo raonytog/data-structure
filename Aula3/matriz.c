@@ -26,14 +26,18 @@ Matriz* inicializaMatriz (int nlinhas, int ncolunas) {
     if (nlinhas <= 0 || ncolunas <= 0) return NULL;
 
     Matriz * m = malloc(sizeof(Matriz));
-    if (!m) printf("Alocacao errada da matriz!\n"); exit(1);
+    if (!m) {
+        printf("Alocacao errada da matriz!\n"); 
+        exit(1);
+    }
 
     m->grid = calloc(nlinhas * ncolunas, sizeof(int));
-    if (!m->grid) printf("Alocacao errada no grid!\n"); exit(1);
+    if (!m->grid) {
+        printf("Alocacao errada no grid!\n");
+        exit(1);
+    }
 
     m->nCols = ncolunas;            m->nRows = nlinhas;
-    for (int i=0;i<ncolunas*nlinhas;i++) scanf("%d ", &m->grid + i);
-
     return m;
 }
 
@@ -45,7 +49,12 @@ Matriz* inicializaMatriz (int nlinhas, int ncolunas) {
  */
 void modificaElemento (Matriz* mat, int linha, int coluna, int elem) {
     if (!mat) return;
-    if (linha <= 0 || coluna <= 0) printf("A linha e/ou a coluna nao eh valida"); exit(1);
+    if (linha < 0 || coluna < 0 || 
+        linha >= recuperaNLinhas(mat) || 
+        coluna >= recuperaNColunas(mat)) {
+        printf("A linha e/ou a coluna nao eh valida");
+        exit(1);
+    }
     mat->grid[linha * mat->nCols + coluna] = elem;  
 }
 
@@ -57,7 +66,9 @@ void modificaElemento (Matriz* mat, int linha, int coluna, int elem) {
  */
 int recuperaElemento(Matriz* mat, int linha, int coluna) {
     if (!mat) return 0;
-    if (linha <= 0 || coluna <= 0) {
+    if (linha < 0 || coluna < 0 || 
+        linha >= recuperaNLinhas(mat) || 
+        coluna >= recuperaNColunas(mat)) {
         printf("A linha e/ou a coluna nao eh valida");
         exit(1);
     }
@@ -92,7 +103,17 @@ int recuperaNLinhas (Matriz* mat) {
  * pre-condicao: matriz mat existe
  * pos-condicao: mat n„o È modificada e matriz transposta existe
  */
-Matriz* transposta (Matriz* mat);
+Matriz* transposta (Matriz* mat) {
+    if (!mat) return NULL;
+    Matriz * ans = inicializaMatriz(recuperaNColunas(mat), recuperaNLinhas(mat));
+    for (int i = 0; i < recuperaNLinhas(ans); i++) {
+        for (int j = 0; j < recuperaNColunas(ans); j++) {
+            ans->grid[i*recuperaNColunas(ans) + j] = mat->grid[j*recuperaNColunas(mat) + i];
+        }
+    }
+    
+    return ans;
+}
 
 /*Retorna a matriz multiplicacao entre mat1 e mat2
  * inputs: as matrizes mat1 e mat2
@@ -103,18 +124,22 @@ Matriz* transposta (Matriz* mat);
  */
 Matriz* multiplicacao (Matriz* mat1, Matriz* mat2) {
     if (!mat1 || !mat2) return NULL;
-    if (mat1->nCols != mat2->nRows) return NULL;
+    if (mat1->nCols != mat2->nRows) {
+        printf("Nao eh possivel multiplicar as matrizes!\n");
+        return NULL;
+    };
 
-    Matriz * ans = malloc( (mat1->nRows * mat2->nCols) * sizeof(int));
-    ans->nRows = mat1->nRows;                ans->nCols = mat2->nCols;
+    Matriz * ans = inicializaMatriz(recuperaNLinhas(mat1), recuperaNColunas(mat2));
 
     for(int m = 0; m < recuperaNLinhas(mat1); m++) {
-        for(int n = 0; n < recuperaNColunas(mat1); n++) {
-            for (int r = 0; r < recuperaNColunas(mat2); r++) {
-
+        for (int r = 0; r < recuperaNColunas(mat2); r++) {
+            for(int n = 0; n < recuperaNColunas(mat1); n++) {
+                ans->grid[m*recuperaNColunas(ans) + r] += mat1->grid[m*recuperaNColunas(mat1) + n] * mat2->grid[n*recuperaNColunas(mat2) + r];
             }
         }
     }
+
+    return ans;
 }
 
 /*Imprime a matriz
@@ -125,12 +150,9 @@ Matriz* multiplicacao (Matriz* mat1, Matriz* mat2) {
  */
 void imprimeMatriz(Matriz* mat) {
     if (!mat) return;
-    for (int i = 0; i< mat->nRows; i++) {
-        printf("\n");
-        for (int j = 0 ; j <mat->nCols; j++) {
-            printf("%d ", mat->grid[i*mat->nCols + j]);
-        }
-    }
+    for (int i = 0; i < recuperaNLinhas(mat); i++) 
+        imprimeLinhas(mat, i);
+    printf("\n");
 }
 
 void imprimeLinhas (Matriz* mat, int indice) {
@@ -138,6 +160,7 @@ void imprimeLinhas (Matriz* mat, int indice) {
     for (int j = 0 ; j < mat->nCols; j++) {
         printf("%d ", mat->grid[indice*mat->nCols + j]);
     }
+    printf("\n");
 }
 
 void destroiMatriz (Matriz* mat) {

@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "mercado.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "matriz.h": "c"
     }
 }
