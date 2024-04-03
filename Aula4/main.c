@@ -6,7 +6,7 @@
 #include "produto.h"
 
 int main () {
-    Sentinela * lista = CriaLista();
+    Sentinela * lista = CriaSentinela();
 
     Produto * batata = CriaProduto(001, "batata", 10);
     Produto * chocolate = CriaProduto(002, "chocolate", 20);

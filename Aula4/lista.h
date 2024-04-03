@@ -7,7 +7,9 @@ typedef struct sentinela Sentinela;
 
 typedef struct lista Lista;
 
-Sentinela * CriaLista();
+Sentinela * CriaSentinela();
+
+Lista * CriaLista();
 
 void InsereProdutoLista(Sentinela *s, Produto *p);
 

@@ -10,15 +10,20 @@ struct lista {
     Lista *next;
 };
 
-Sentinela * CriaLista() {
+Sentinela * CriaSentinela() {
     Sentinela * s = malloc(sizeof(Sentinela));
     s->primeiro = NULL;
     s->ultimo = NULL;
     return s;
 }
 
+Lista * CriaLista() {
+    Lista * l = malloc(sizeof(Lista));
+    return l;
+}
+
 void InsereProdutoLista(Sentinela *s, Produto *p) {
-    Lista * temp;
+    Lista * temp = CriaLista();
     temp->p = p;
 
     if (!s->primeiro && !s->ultimo) {
