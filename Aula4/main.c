@@ -9,11 +9,11 @@ int main () {
     Sentinela * lista = CriaSentinela();
 
     Produto * batata = CriaProduto(001, "batata", 10);
-    Produto * chocolate = CriaProduto(002, "chocolate", 20);
-
     InsereProdutoLista(lista, batata);
     ImprimeLista(lista);
+    
 
+    Produto * chocolate = CriaProduto(002, "chocolate", 20);
     InsereProdutoLista(lista, chocolate);
     ImprimeLista(lista);
 

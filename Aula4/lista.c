@@ -12,13 +12,15 @@ struct lista {
 
 Sentinela * CriaSentinela() {
     Sentinela * s = malloc(sizeof(Sentinela));
-    s->primeiro = NULL;
-    s->ultimo = NULL;
+    s->primeiro = CriaLista();
+    s->ultimo = CriaLista();
     return s;
 }
 
 Lista * CriaLista() {
     Lista * l = malloc(sizeof(Lista));
+    l->next = NULL;
+    l->p = NULL;
     return l;
 }
 
@@ -26,8 +28,8 @@ void InsereProdutoLista(Sentinela *s, Produto *p) {
     Lista * temp = CriaLista();
     temp->p = p;
 
-    if (!s->primeiro && !s->ultimo) {
-        s->primeiro->p = p;    s->ultimo->p = p;
+    if (!(s->primeiro->p && s->ultimo->p)) {
+        s->primeiro = temp;    s->ultimo = temp;
         return;
     }
 
@@ -67,11 +69,13 @@ void RetiraProdutoLista(Sentinela *s, int cod) {
 }
 
 void ImprimeLista(Sentinela *s) {
+    printf("-------------------------\n");
     Lista *temp = s->primeiro;
-    while (!temp->next) {
+    while (temp) {
         ImprimeProduto(temp->p);
         temp = temp->next;
     }
+    printf("-------------------------\n\n");
 }
 
 void LiberaLista(Sentinela *s) {
