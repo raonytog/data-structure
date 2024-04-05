@@ -2,6 +2,8 @@
     "files.associations": {
         "mercado.h": "c",
         "stdio.h": "c",
-        "matriz.h": "c"
+        "matriz.h": "c",
+        "aluno.h": "c",
+        "lista.h": "c"
     }
 }
