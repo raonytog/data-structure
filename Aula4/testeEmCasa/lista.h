@@ -10,18 +10,18 @@ typedef struct Node Node;
 
 Sentinela * InicializaSentinela();
 
-int EstaVaziaLista(Sentinela * sentinela);
+int EstaVaziaLista(Sentinela *sentinela);
 
-void LiberaSentinela(Sentinela * sentinela);
+void LiberaSentinela(Sentinela *sentinela);
 
-void LiberaNode(Node * node);
+void LiberaNode(Node *node);
 
-void ImprimeLista(Sentinela * sentinela);
+void ImprimeLista(Sentinela *sentinela);
 
-void RemoveAlunoLista(Sentinela * sentinela, int matricula);
+void RemoveAlunoLista(Sentinela *sentinela, int matricula);
 
-void AdicionaAlunoListaFinal(Sentinela * sentinela, Aluno * aluno);
+void AdicionaAlunoListaFinal(Sentinela *sentinela, Aluno *aluno);
 
-void AdicionaAlunoListaInicio(Sentinela * sentinela, Aluno * aluno);
+void AdicionaAlunoListaInicio(Sentinela *sentinela, Aluno *aluno);
 
 #endif // !_LISTA_H_

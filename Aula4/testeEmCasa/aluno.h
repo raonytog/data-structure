@@ -15,5 +15,4 @@ void ImprimeAluno(Aluno *aluno);
 
 int ComparaMatricula (Aluno *a, int matricula);
 
-
 #endif // !_ALUNO_H_

@@ -17,21 +17,21 @@ Sentinela *InicializaSentinela() {
     return s;
 }
 
-Node * CriaNode(Aluno *aluno) {
+Node *CriaNode(Aluno *aluno) {
     Node *node = malloc(sizeof(Node));
     node->aluno = aluno;
     node->next = NULL;
     return node;
 }
 
-int EstaVaziaLista(Sentinela * sentinela) {
+int EstaVaziaLista(Sentinela *sentinela) {
     return !sentinela->first && !sentinela->last;
 }
 
-void LiberaSentinela(Sentinela * sentinela) {
+void LiberaSentinela(Sentinela *sentinela) {
     if (!sentinela) return;
 
-    Node * tempNode = sentinela->first;
+    Node *tempNode = sentinela->first;
     while (tempNode) {
         tempNode = tempNode->next;
         LiberaNode(sentinela->first);
@@ -40,17 +40,16 @@ void LiberaSentinela(Sentinela * sentinela) {
     free(sentinela);
 }
 
-void LiberaNode(Node * node) {
+void LiberaNode(Node *node) {
     if (!node) return;
-    //LiberaAluno(node->aluno);
     free(node);
 }
 
-void ImprimeLista(Sentinela * sentinela) {
+void ImprimeLista(Sentinela *sentinela) {
     if (!sentinela) return;
 
     printf("----------------------Lista de Alunos ----------------------\n");
-    Node * tempNode = sentinela->first;
+    Node *tempNode = sentinela->first;
     while (tempNode) {
         ImprimeAluno(tempNode->aluno);
         tempNode = tempNode->next;
@@ -58,7 +57,7 @@ void ImprimeLista(Sentinela * sentinela) {
     printf("------------------------------------------------------------\n\n");
 }
 
-void RemoveAlunoLista(Sentinela * sentinela, int matricula) {
+void RemoveAlunoLista(Sentinela *sentinela, int matricula) {
     Node *atual, *ant;
 
     // se a lista estiver vazia
@@ -88,33 +87,33 @@ void RemoveAlunoLista(Sentinela * sentinela, int matricula) {
     }
 }
 
-void AdicionaAlunoListaFinal(Sentinela * sentinela, Aluno * aluno) {
+void AdicionaAlunoListaFinal(Sentinela *sentinela, Aluno *aluno) {
     // se nao tiver alocado espaco para as estruturas do parametro
     if (!sentinela || !aluno) return;
 
     // se a lista estiver vazia
-    Node * node = CriaNode(aluno);
+    Node *node = CriaNode(aluno);
     if (EstaVaziaLista(sentinela)) sentinela->first = sentinela->last = node;
 
     // adiciona ao final da lista
-    Node * antigo = sentinela->last;
+    Node *antigo = sentinela->last;
     sentinela->last = node;
     antigo->next = sentinela->last;
 }
 
-void AdicionaAlunoListaInicio(Sentinela * sentinela, Aluno * aluno) {
+void AdicionaAlunoListaInicio(Sentinela *sentinela, Aluno *aluno) {
     // se nao tiver alocado espaco para as estruturas do parametro
     if (!sentinela || !aluno) return;
 
     // se a lista estiver vazia
-    Node * node = CriaNode(aluno);
+    Node *node = CriaNode(aluno);
     if (EstaVaziaLista(sentinela)) {
         sentinela->first = sentinela->last = node;
         return;
     }
 
     // adiciona ao comeco da lista
-    Node * antigo = sentinela->first;
+    Node *antigo = sentinela->first;
     sentinela->first = node;
     node->next = antigo;
 }

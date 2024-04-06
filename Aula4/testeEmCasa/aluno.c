@@ -27,6 +27,6 @@ void ImprimeAluno(Aluno *aluno) {
     printf("\tAluno: %s, Matricula: %03d, CR:%.2f\n", aluno->nome, aluno->matricula, aluno->CR);
 }
 
-int ComparaMatricula (Aluno *a, int matricula) {
+int ComparaMatricula(Aluno *a, int matricula) {
     return a->matricula == matricula;
 }
