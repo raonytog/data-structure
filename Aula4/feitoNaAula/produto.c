@@ -27,7 +27,7 @@ float GetPrecoProduto(Produto *p) {
 }
 
 void ImprimeProduto(Produto *p) {
-    printf("Nome: %s, Preco: %.2ff, Codigo: %d\n", p->nome, p->preco, p->cod);
+    printf("Nome: %s, Preco: %.2f, Codigo: %d\n", p->nome, p->preco, p->cod);
 }
 
 void LiberaProduto(Produto *p) {
