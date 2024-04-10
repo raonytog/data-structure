@@ -4,6 +4,7 @@
         "stdio.h": "c",
         "matriz.h": "c",
         "aluno.h": "c",
-        "lista.h": "c"
+        "lista.h": "c",
+        "produto.h": "c"
     }
 }
