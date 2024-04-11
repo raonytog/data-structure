@@ -8,76 +8,73 @@ struct Celula {
     Produto *produto;
 };
 
-
 Lista* CriaLista() {
-    Lista *c = malloc(sizeof(Lista));
-    if (!c) return NULL;
-    c->ant = c->prox = NULL;
-    c->produto = NULL;
+    Lista *c = NULL;
     return c;
 }
 
 void LiberaLista(Lista *lista) {
     if (!lista) return;
-    Lista *aux = lista->ant;
-    for (;aux->prox;) {
-        if (aux) {
-            LiberaProduto(aux->produto);
-            aux = aux->prox;
-            free(aux);
-        }
+    
+    Lista *aux;
+    for (;lista;) {
+        aux = lista->prox;
+        free(lista);
+        lista = aux;
     }
 }
 
 void ImprimeLista(Celula *lista) {
     if (!lista) return;
+    printf("==================================================\n");
     Lista *aux = lista;
     for (;aux;) {
         ImprimeProduto(aux->produto);
         aux = aux->prox;
     }
+    printf("==================================================\n\n");
 }
 
 Lista* InsereProdutoLista(Lista *lista, Produto *p) {
-    if (!p) return NULL;
-
-    Lista *new = CriaLista();
+    Lista *new = malloc(sizeof(Lista));
     new->produto = p;
+    printf("\tInserido produto '%s' com sucesso!\n", GetNomeProduto(p));
 
-    // se n tiver nada na lista
-    if (!lista->produto) {
+    // se a lista estiver vazia
+    if (!lista) {
+        new->prox = new->ant = NULL;
         return new;
     }
 
-    // se so tiver um item
-    if (!lista->prox) {
-        new->prox->ant = new;
-    } 
-
+    // caso tenha mais items na lista
+    new->prox = lista;
     lista->ant = new;
-    new->ant = NULL;
     return new;
 }
 
 Lista* RetiraProdutoLista(int cod, Lista *lista) {
-    // lista nao existe
+    // lista vazia
     if (!lista) return NULL;
 
-    // se eh o primeiro
+    Lista *new;
     if (GetCodigoProduto(lista->produto) == cod) {
-        lista = lista->prox;
-        return lista;
+        printf("\tRemovido produto '%s' com sucesso!\n", GetNomeProduto(lista->produto));
+        new = lista->prox;
+        new->ant = NULL;
+        free(lista);
+        return new;
     }
 
-    // resto
-    Lista *aux;
-    for (aux = lista; aux->prox != NULL; aux = aux->prox) {
-        if (GetCodigoProduto(aux->produto) == cod) {
-            aux->ant = aux->prox;
-            break;
+    // verifica todos os items da lista
+    for (new = lista->prox; new; new = new->prox) {
+        if (GetCodigoProduto(new->produto) == cod) {
+            printf("\tRemovido produto '%s' com sucesso!\n", GetNomeProduto(new->produto));
+            new->ant->prox = new->prox;
+            if (new->prox) new->prox->ant = new->ant;
+            free(new);
+            return lista;
         }
     }
 
-    lista = aux;
     return lista;
 }

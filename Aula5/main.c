@@ -13,19 +13,20 @@ int main () {
     ImprimeLista(lista);
     
     Produto *chocolate = CriaProduto(002, "chocolate", 20);
-    InsereProdutoLista(lista, chocolate);
+    lista = InsereProdutoLista(lista, chocolate);
     ImprimeLista(lista);
 
-    // Produto *queijo = CriaProduto(003, "queijo", 320);
-    // InsereProdutoLista(lista, queijo);
-    // ImprimeLista(lista);
+    Produto *queijo = CriaProduto(003, "queijo", 320);
+    lista = InsereProdutoLista(lista, queijo);
+    ImprimeLista(lista);
 
-    // RetiraProdutoLista(lista, 002);
-    // ImprimeLista(lista);
+    lista = RetiraProdutoLista(002, lista);
+    ImprimeLista(lista);
 
-    // LiberaProduto(batata);
-    // LiberaProduto(chocolate);
-    // LiberaProduto(queijo);
+    LiberaProduto(batata);
+    LiberaProduto(chocolate);
+    LiberaProduto(queijo);
 
+    LiberaLista(lista);
     return 0;
 }
