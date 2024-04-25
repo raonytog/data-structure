@@ -7,23 +7,17 @@
 #include "Gato.h"
 #include "Cachorro.h"
 
-#define CACHORRO 1
-#define GATO 2
-
-// bravo = 0
-// agressivo = 1
-
-struct Celula {
-    int tipo;
-    void *animal;
-    Celula *prox;
-};
-
 typedef struct Celula Celula;
 
 struct Lista {
     Celula *first;
     Celula *last;
+};
+
+struct Celula {
+    int tipo;
+    void *animal;
+    Celula *prox;
 };
 
 Lista *IniciaLista() {
@@ -33,23 +27,23 @@ Lista *IniciaLista() {
     return l;
 }
 
-void InsereNaLista(Lista *lista, void *animal) {
+void InsereNaLista(Lista *lista, void *animal, int tipo) {
     if (!animal || !lista) return;
     Celula *c = malloc(sizeof(Celula));
     c->animal = animal;
+    c->tipo = tipo;
     c->prox = NULL;
 
     // lista vazia
     if (!lista->first && !lista->last) {
         lista->first = lista->last = c;
-        return lista;
-
-    // um item
-    } else {
-        lista->last = c;
+        return;
     }
 
-    return c;
+    // mais itens
+    lista->last->prox = c;
+    lista->last = lista->last->prox;
+    return;
 }
 
 void RetiraDaLista(Lista *lista, void *animal) {
@@ -72,6 +66,7 @@ void RetiraDaLista(Lista *lista, void *animal) {
     while (aux) {
         if (aux->animal == animal) {
             ant->prox = aux->prox;
+            break;
         }
 
         ant = aux;
@@ -80,7 +75,7 @@ void RetiraDaLista(Lista *lista, void *animal) {
 }
 
 void ImprimeLista(Lista *lista) {
-    if (!lista) return;
+    if (!lista->first && !lista->last) return;
 
     Celula *aux = lista->first;
     while (aux) {
@@ -93,6 +88,8 @@ void ImprimeLista(Lista *lista) {
                 imprimeGato(aux->animal);
                 break;
         }
+        
+        aux = aux->prox;
     }
 }
 
@@ -101,9 +98,34 @@ void LiberaLista(Lista *lista) {
     while (lista->first) {
         aux = lista->first->prox;
         free(lista->first);
+        lista->first = aux;
     }
 
     free(lista);
 }
 
+int RetornaQtdGatos(Lista *lista) {
+    if (!lista) return 0;
 
+    int qtd = 0;
+    Celula *aux = lista->first;
+    for (;aux;) {
+        if (aux->tipo == GATO) qtd++;
+        aux = aux->prox;
+    }
+
+    return qtd;
+}
+
+int RetornaQtdCachorros(Lista *lista) {
+    if (!lista) return 0;
+
+    int qtd = 0;
+    Celula *aux = lista->first;
+    for (;aux;) {
+        if (aux->tipo == CACHORRO) qtd++;
+        aux = aux->prox;
+    }
+
+    return qtd;
+}

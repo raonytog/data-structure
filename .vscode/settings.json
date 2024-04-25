@@ -5,6 +5,8 @@
         "matriz.h": "c",
         "aluno.h": "c",
         "lista.h": "c",
-        "produto.h": "c"
+        "produto.h": "c",
+        "banhotosa.h": "c",
+        "cachorro.h": "c"
     }
 }

@@ -1,8 +1,10 @@
 #ifndef _CACHORRO_H_
 #define _CACHORRO_H_
 
-#define BRAVO 0
-#define MANSO 1
+#define BRAVO 1
+#define MANSO 0
+
+#define CACHORRO 10
 
 typedef struct Cachorro Cachorro;
 
@@ -13,5 +15,7 @@ void liberaCachorro(Cachorro *cachorro);
 void imprimeCachorro(Cachorro *cachorro);
 
 void atribuiNivelAgressividadeCachorro(Cachorro *cachorro, int nivelAgressividade);
+
+int getNivelAgressividadeCachorro(Cachorro *cachorro);
 
 #endif

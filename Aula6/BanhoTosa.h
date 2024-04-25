@@ -18,7 +18,7 @@
  * * Uma lista de animais (gatos e cachorros) agressivos
  * * Uma lista de animais (gatos e cachorros) mansos
  * */
-typedef struct banhotosa BanhoTosa;
+typedef struct BanhoTosa BanhoTosa;
 
 
 /* Cria uma loja de banho e tosa, ainda vazia, com duas listas de animais vazias

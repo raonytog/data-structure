@@ -21,19 +21,15 @@ void atribuiNivelAgressividadeCachorro(Cachorro *cachorro, int nivelAgressividad
 }
 
 void imprimeCachorro(Cachorro *cachorro) {
-    print("%s - ", cachorro->nome);
-    switch (cachorro->nivelAgressividade) {
-        case BRAVO:
-            printf("BRAVO\n");
-            break;
+    printf("\tCachorro: %s\n", cachorro->nome);
 
-        case MANSO:
-            printf("MANSO\n");
-            break;
-    }
 }
 
 void liberaCachorro(Cachorro *cachorro) {
     free(cachorro->nome);
     free(cachorro);
+}
+
+int getNivelAgressividadeCachorro(Cachorro *cachorro) {
+    return cachorro->nivelAgressividade;
 }

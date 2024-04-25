@@ -23,18 +23,13 @@ void liberaGato(Gato *gato) {
 }
 
 void imprimeGato (Gato *gato) {
-    print("%s - ", gato->nome);
-    switch (gato->nivelAgressividade) {
-        case BRAVO:
-            printf("BRAVO\n");
-            break;
-
-        case MANSO:
-            printf("MANSO\n");
-            break;
-    }
+    printf("\tGato: %s\n", gato->nome);
 }
 
-void atribuiNivelAgressividadeCachorro(Gato *gato, int nivelAgressividade) {
+void atribuiNivelAgressividadeGato(Gato *gato, int nivelAgressividade) {
     gato->nivelAgressividade = nivelAgressividade;
+}
+
+int getNivelAgressividadeGato(Gato *gato) {
+    return gato->nivelAgressividade;
 }

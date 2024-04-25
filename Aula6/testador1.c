@@ -14,16 +14,16 @@ int main(int argc, const char * argv[]) {
     //cadastra uns cachorrinhos e gatinhos
     //nome e nível de agressividade
     
-    Cachorro* iris = inicCachorro("Iris", BRAVO);
-    Cachorro* bob = inicCachorro("Bob", MANSO);
-    Cachorro* baby = inicCachorro("Baby", MANSO);
+    Cachorro *iris = inicCachorro("Iris", BRAVO);
+    Cachorro *bob = inicCachorro("Bob", MANSO);
+    Cachorro *baby = inicCachorro("Baby", MANSO);
 
-    Gato* branca = inicGato("Branca", BRAVO);
-    Gato* ronaldo = inicGato("RonaldoCesar", MANSO);
+    Gato *branca = inicGato("Branca", BRAVO);
+    Gato *ronaldo = inicGato("RonaldoCesar", MANSO);
     
 
     //cria uma instância do banho tosa
-    BanhoTosa* loja = inicBanhoTosa("PetShow");
+    BanhoTosa *loja = inicBanhoTosa("PetShow");
         
     //cadastra os cachorrinhos e gatinhos
     cadastraGato(loja, branca);
@@ -37,9 +37,8 @@ int main(int argc, const char * argv[]) {
     imprimeBanhoTosa(loja);
     
     //muda nível de agressividade (por exemplo, bob ficou agressivo)
-    atribuiNivelAgressividadeCachorro(bob, BRAVO);
-    
     //precisa atualizar a situação do Bob na loja
+    atribuiNivelAgressividadeCachorro(bob, BRAVO);
     atualizaSituacaoCachorro(loja, bob);
     
     //mesma coisa com a branca
@@ -49,12 +48,11 @@ int main(int argc, const char * argv[]) {
     //Imprime tudo agora, com a nova situação da loja
     imprimeBanhoTosa(loja);
     
-    
     //calcula valor a receber
     float valor = calculaReceita(loja);
-    printf("\nValor a Receber %.2f", valor);
+    printf("Valor a Receber: %.2f\n", valor);
     
-    //libera tudo
+    //libera tudo, menos os animais
     liberaBanhoTosa(loja);
     
     liberaGato(branca);
