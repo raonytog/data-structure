@@ -29,7 +29,10 @@ Lista *IniciaLista() {
 
 void InsereNaLista(Lista *lista, void *animal, int tipo) {
     if (!animal || !lista) return;
+
     Celula *c = malloc(sizeof(Celula));
+    if (!c) return;
+
     c->animal = animal;
     c->tipo = tipo;
     c->prox = NULL;
@@ -42,31 +45,43 @@ void InsereNaLista(Lista *lista, void *animal, int tipo) {
 
     // mais itens
     lista->last->prox = c;
-    lista->last = lista->last->prox;
+    lista->last = c;
     return;
 }
 
+/**
+ * O maior problema que tive foi nesta funcao, pois eu esqueci de liberar a celula. 
+ * Alem disso, tambem esqueci de retornar no primeiro if, pois ele sempre ia ao while
+ * ja que estava sem o if
+*/
 void RetiraDaLista(Lista *lista, void *animal) {
-    if (!animal || !lista || ( !lista->first && !lista->last)) return;
-
-    // lista com um item
-    if (lista->first->animal == lista->last->animal) {
-        lista->first = lista->last = NULL;
-        return;
-    }
+    if (!animal || !lista || !lista->first) return;
+    Celula *aux = lista->first, *ant = NULL;
 
     // se for o primeiro
-    if (lista->first->animal == animal) {
-        lista->first = lista->first->prox;
+    if (aux->animal == animal) {
+        lista->first = aux->prox;
+        free(aux);
+
+        // se a lista so tiver um item
+        if (!lista->first) 
+            lista->last = NULL;
+
         return;
     }
+    
 
-    // os demais
-    Celula *aux = lista->first, *ant;
+    // Procura o elemento a ser removido
     while (aux) {
         if (aux->animal == animal) {
             ant->prox = aux->prox;
-            break;
+            
+            // Se for o último item da lista
+            if (aux == lista->last)
+                lista->last = ant;
+                
+            free(aux);
+            return;
         }
 
         ant = aux;
