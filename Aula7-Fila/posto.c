@@ -36,11 +36,12 @@ void imprimePosto(Posto* posto) {
     printf("Amostras nao processadas\n");
     ImprimeFila(posto->examesNaoProcessados);
 
-    printf("Amostras com resultados positivos\n");
+    printf("\nAmostras com resultados positivos\n");
     ImprimeFila(posto->examesPositivos);
 
-    printf("Amostras com resultados negativos\n");
+    printf("\nAmostras com resultados negativos\n");
     ImprimeFila(posto->examesNegativos);
+    printf("\n\n\n");
 }
 
 void realizaColeta(Posto* posto, char* pessoa, int idade) {
@@ -55,7 +56,7 @@ void processaLoteAmostras(Posto* posto) {
     if (!posto) return;
 
     Amostra *amostra;
-    while (posto->examesNaoProcessados) {
+    while (!EstaVaziaLista(posto->examesNaoProcessados)) {
         amostra = RetiraFila(posto->examesNaoProcessados);
 
         if (retornaCargaViral(amostra) >= LIMITE_CARGA_VIRAL) {
@@ -65,7 +66,6 @@ void processaLoteAmostras(Posto* posto) {
 
         } else if (retornaCargaViral(amostra) < LIMITE_CARGA_VIRAL) {
             registraResultado(amostra, NEGATIVO);
-            InsereFilaFinal(posto->examesNegativos, amostra);
             if (retornaIdade(amostra) >= 60) InsereFilaInicio(posto->examesNegativos, amostra);
             else InsereFilaFinal(posto->examesNegativos, amostra);
         }
@@ -79,6 +79,7 @@ void liberaPosto(Posto* posto) {
     Liberafila(posto->examesNaoProcessados);
     Liberafila(posto->examesNegativos);
     Liberafila(posto->examesPositivos);
+
     free(posto);
 }
 

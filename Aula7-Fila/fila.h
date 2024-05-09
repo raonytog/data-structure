@@ -21,4 +21,6 @@ void ImprimeFila(Fila *fila);
 
 void Liberafila(Fila *fila);
 
+int EstaVaziaLista(Fila *fila);
+
 #endif

@@ -13,9 +13,7 @@ struct Fila {
 
 Fila *IniciaFila() {
     Fila *f = malloc(sizeof(Fila));
-    if (!f) {
-        printf("Fila nao alocada!\n"); return NULL;
-    }
+    if (!f) { printf("Fila nao alocada!\n"); return NULL; }
 
     f->first = f->last = NULL;
     return f;
@@ -29,10 +27,7 @@ void InsereFilaFinal(Fila *fila, Amostra *amostra) {
     c->next = NULL;
 
     // se n tiver item na fila
-    if (!fila->first) {
-        fila->first = fila->last = c;
-        return;
-    }
+    if (!fila->first) { fila->first = fila->last = c;   return;}
 
     fila->last->next = c;
     fila->last = c;
@@ -56,19 +51,17 @@ void InsereFilaInicio(Fila *fila, Amostra *amostra) {
 }
 
 Amostra *RetiraFila(Fila *fila) {
-    if (!fila || !fila->first) return NULL;
+    if (!fila || !fila->first) exit(EXIT_FAILURE);
 
-    Amostra *requisitado; Fila *fila;
-    if (fila->first == fila->last) {
-        requisitado = fila->first->amostra;
-        free(fila->first);
-        fila->first = fila->last = NULL;
-        return requisitado;
-    }
+    Amostra *requisitado = fila->first->amostra;
+    
+    if (!fila->first) return NULL;
 
-    requisitado = fila->first->amostra;
-    free(fila->first);
+    Celula *auxiliar = fila->first;
     fila->first = fila->first->next;
+    if (fila->first == NULL) fila->last = NULL;
+    free(auxiliar);
+
     return requisitado;
 }
 
@@ -84,8 +77,18 @@ void ImprimeFila(Fila *fila) {
 void Liberafila(Fila *fila) {
     if (!fila) return;
     Celula *auxilar = fila->first;
-    for (;auxilar; fila->first = auxilar) {
+    while (auxilar) {
         auxilar = auxilar->next;
+        liberaAmostra(fila->first->amostra);
         free(fila->first);
+        fila->first = auxilar;
     }
+    
+    free(fila);
+}
+
+int EstaVaziaLista(Fila *fila) {
+    if (!fila) return -1;
+    if (!fila->first && !fila->last) return 1;
+    return 0;
 }
