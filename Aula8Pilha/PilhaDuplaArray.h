@@ -1,4 +1,13 @@
-#define MaxTam 1000
+#ifndef _PILHADUPLAARRAY_C_
+#define _PILHADUPLAARRAY_C_
+
+
+#define MaxTam 10
+
+#include <stdbool.h>
+
+#define PILHA1 1
+#define PILHA2 2
 
 typedef int QualPilha;
 
@@ -8,10 +17,19 @@ typedef struct IndicePilha IndicePilha;
 
 typedef struct TipoPilhaDupla TipoPilhaDupla;
 
+
 TipoPilhaDupla *init();
 
-void Push(TipoPilhaDupla *pilha, TipoItem *item, int wichStack);
+void Push(TipoPilhaDupla *pilha, TipoItem item, int wichStack);
 
-TipoItem *Pop(TipoPilhaDupla *pilha, QualPilha wichStack);
+TipoItem Pop(TipoPilhaDupla *pilha, QualPilha wichStack);
 
-void Free(TipoPilhaDupla *pilha);
+void DestroyStack(TipoPilhaDupla *pilha);
+
+bool IsStackFull(TipoPilhaDupla *pilha);
+
+bool IsStackEmpity(TipoPilhaDupla *pilha);
+
+void PrintStack(TipoPilhaDupla *pilha);
+
+#endif

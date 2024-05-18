@@ -1,14 +1,8 @@
-#ifndef _PILHADUPLAARRAY_C_
-#define _PILHADUPLAARRAY_C_
-
 #include "PilhaDuplaArray.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
-#define PILHA1 1
-#define PILHA2 2
 
 struct IndicePilha {
     int Topo, Base;
@@ -30,30 +24,69 @@ TipoPilhaDupla *init() {
     return pilha;
 }
 
-void Push(TipoPilhaDupla *pilha, TipoItem *item, QualPilha wichStack) {
-    if (!pilha || wichStack != 1 || wichStack != 2) return;
+void Push(TipoPilhaDupla *pilha, TipoItem item, QualPilha wichStack) {
+    if (!pilha || (wichStack > 2 || wichStack < 1)) return;
 
+    if (IsStackFull(pilha)) return;
     switch (wichStack) {
         case PILHA1:
-            if (pilha->Pilha1.Topo == MaxTam) return;
-            pilha->Item[pilha->Pilha1.Topo] = item;
+            pilha->Item[pilha->Pilha1.Topo+1] = item;
+            pilha->Pilha1.Topo++;
             break;
 
         case PILHA2:
-            if (pilha->Pilha2.Topo == MaxTam) return;
-            pilha->Item[pilha->Pilha2.Topo] = item;
+            pilha->Item[pilha->Pilha2.Topo-1] = item;
+            pilha->Pilha2.Topo--;
             break;
     }
+    printf("Item '%d' has been pushed to the stack #%d!\n", item, wichStack);
 }
 
-TipoItem *Pop(TipoPilhaDupla *pilha, QualPilha wichStack) {
-    if (!pilha) return;
+TipoItem Pop(TipoPilhaDupla *pilha, QualPilha wichStack) {
+    if (!pilha) return -999;
 
+    TipoItem *popped;
+    switch (wichStack) {
+        case PILHA1:
+            if (pilha->Pilha1.Topo == -1) return -999;
+            popped = pilha->Item[pilha->Pilha1.Topo];
+            pilha->Item[pilha->Pilha1.Topo] = 0;
+            pilha->Pilha1.Topo--;
+            break;
+
+        case PILHA2:
+            if (pilha->Pilha2.Topo == MaxTam -1) return -999;
+            popped = pilha->Item[pilha->Pilha2.Topo];
+            pilha->Item[pilha->Pilha2.Topo] = 0;
+            pilha->Pilha2.Topo--;
+            break;
+    }
+
+    printf("Item '%d' has been removed!\n", popped);
+    return popped;
 }
 
-void Free(TipoPilhaDupla *pilha) {
+void DestroyStack(TipoPilhaDupla *pilha) {
     if (!pilha) return;
     free(pilha);
 }
 
-#endif
+bool IsStackFull(TipoPilhaDupla *pilha) {
+    if (!pilha) return true;
+    if (pilha->Pilha1.Topo+1 + pilha->Pilha2.Topo+1 == MaxTam-1) return true;
+    return false;
+}
+
+bool IsStackEmpity(TipoPilhaDupla *pilha) {
+    if (!pilha) return true;
+    if (pilha->Pilha1.Topo == -1 || pilha->Pilha2.Topo == MaxTam -1) return true;
+    return false;
+}
+
+void PrintStack(TipoPilhaDupla *pilha) {
+    if (!pilha) return;
+    for (int i = 0; i < MaxTam; i++) {
+        printf("%d - %d\n", i, pilha->Item[i]);
+    }
+}
+
