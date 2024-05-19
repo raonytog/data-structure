@@ -155,10 +155,12 @@ int EnviaPedido (TPedido* pedido, int restricao_calorica, char* restricao_alimen
     }
 
     auxiliar = pedido->first;
+    free(pedido->donoPedido);
     while (auxiliar) {
         auxiliar = auxiliar->next;
         free(pedido->first);
         pedido->first = auxiliar;
     }
+    free(pedido);
     return 1;
 }
