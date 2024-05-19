@@ -6,7 +6,7 @@
 
 int main () {
     TipoPilhaMultipla *stack = Init();
-    PushStack(stack, 100, STACK1);
+    PushStack(stack, 9999, STACK1);
     PushStack(stack, 20, STACK1);
     PushStack(stack, 303, STACK2);
     PushStack(stack, 500, STACK6);
@@ -14,6 +14,7 @@ int main () {
     PushStack(stack, 777, STACK7);
     PushStack(stack, 777, STACK7);
     PrintStack(stack);
+    printf("\n\n");
 
     PopStack(stack, STACK1);
     PopStack(stack, STACK7);

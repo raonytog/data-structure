@@ -25,21 +25,19 @@ TipoPilhaMultipla *Init() {
 }
 
 void PushStack(TipoPilhaMultipla *stack, TipoItem item, int wichStack) {
-    if (!stack); 
+    if (!stack) return;
 
-    if (IsPushPossible(stack, wichStack)) return;
-    stack->Item[stack->Pilha[wichStack].Topo+1] = item;
+    if (!IsPushPossible(stack, wichStack)) return;
     stack->Pilha[wichStack].Topo++;
-
-    return;
+    int idx = stack->Pilha[wichStack].Topo;
+    stack->Item[idx] = item;
 }
 
 TipoItem PopStack(TipoPilhaMultipla *stack, int wichStack) {
     if (!stack) return -1;
-    TipoItem item = 0;
+    if (IsStackEmpty(stack, wichStack)) return -1;
 
-    if (IsStackEmpty(stack, wichStack)) return item;
-    item = stack->Item[stack->Pilha[wichStack].Topo];
+    TipoItem item = stack->Item[stack->Pilha[wichStack].Topo];
     stack->Item[stack->Pilha[wichStack].Topo] = 0;
     stack->Pilha[wichStack].Topo--;
 
@@ -55,8 +53,9 @@ void PrintStack(TipoPilhaMultipla *stack) {
     if (!stack) return;
 
     for (int i = 0; i < N; i++) {
-        for (int j = stack->Pilha[i].Base; j < stack->Pilha->Topo+1; j++) {
-            printf("Stack #%d - Content #%d\n", i, j);
+        printf("Stack #%d:\n", i);
+        for (int j = stack->Pilha[i].Base; j < stack->Pilha[i].Topo+1; j++) {
+            printf("  Content #%d: %d\n", j, stack->Item[j]);
         }
         printf("\n");
     }
@@ -64,13 +63,13 @@ void PrintStack(TipoPilhaMultipla *stack) {
 
 int IsPushPossible(TipoPilhaMultipla *stack, int wichStack) {
     if (!stack) return -1;
-    if (stack->Pilha[wichStack].Topo+1 % 100 == 0) return 0;
+    if (stack->Pilha[wichStack].Topo+1 >= stack->Pilha[wichStack].Base+100) return 0;
     return 1;
 }
 
 int IsStackEmpty(TipoPilhaMultipla *stack, int wichStack) {
     if (!stack) return -1;
-    if (stack->Pilha[wichStack].Base-1 == stack->Pilha[wichStack].Topo) return 1;
+    if (stack->Pilha[wichStack].Topo < stack->Pilha[wichStack].Base) return 1;
     return 0;
 }
 

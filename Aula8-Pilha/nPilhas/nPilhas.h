@@ -22,9 +22,9 @@ typedef struct TipoPilhaMultipla TipoPilhaMultipla;
 
 TipoPilhaMultipla *Init();
 
-void PushStack(TipoPilhaMultipla *stack, TipoItem item, int wichStack);
+void PushStack(TipoPilhaMultipla *stack, int item, int wichStack);
 
-TipoItem PopStack(TipoPilhaMultipla *stack, int wichStack);
+int PopStack(TipoPilhaMultipla *stack, int wichStack);
 
 void DestroyStack(TipoPilhaMultipla *stack);
 
