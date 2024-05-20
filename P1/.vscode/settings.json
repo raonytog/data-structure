@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "listavetor.h": "c",
+        "listadupss.h": "c",
+        "stdlib.h": "c"
+    }
+}

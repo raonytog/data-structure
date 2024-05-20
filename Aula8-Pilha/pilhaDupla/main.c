@@ -1,4 +1,4 @@
-#include "PilhaDuplaArray.h"
+#include "PilhaDupla.h"
 
 #include <stdio.h>
 #include <stdlib.h>

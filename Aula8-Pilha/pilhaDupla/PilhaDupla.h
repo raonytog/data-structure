@@ -1,5 +1,5 @@
-#ifndef _PILHADUPLAARRAY_C_
-#define _PILHADUPLAARRAY_C_
+#ifndef _PILHADUPLA_C_
+#define _PILHADUPLA_C_
 
 
 #define MaxTam 10
