@@ -7,9 +7,7 @@
 #include <stdio.h>
 #include "lista.h"
 
-int main()
-{
-    
+int main() {
     printf ("\n **** Preparando para a Terceira Bateria de Testes. Vale 10,0 **** \n\n");
     
     //cria  turmas
@@ -91,14 +89,24 @@ int main()
     Imprime (mix);
     
     //libera o espaço alocado para o aluno John
-    LiberaAluno (john);
+    //LiberaAluno (john);
     
     //libera o espaço alocado para o aluno patricia
-    LiberaAluno (patricia);
+    //LiberaAluno (patricia);
     
     //Liberando as memorias (use o valgrind!)
     LiberaLista (mix);
     LiberaLista (turma1);
     LiberaLista (turma2);
+
+    //Liberando os demais alunos, pois na lista ficou errado
+    LiberaAluno(patricia);
+    LiberaAluno(maria);
+    LiberaAluno(joao);
+    LiberaAluno(eduardo);
+    LiberaAluno(lucas);
+    LiberaAluno(john);
+    LiberaAluno(fulano);
+    LiberaAluno(simone);
 }
 
