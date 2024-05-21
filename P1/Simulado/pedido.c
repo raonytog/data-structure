@@ -107,9 +107,10 @@ void ImprimePedido (TPedido* pedido) {
 void RetiraProdutoPedido (TPedido* pedido, char* prod) {
     if (!pedido || !prod) return;
 
+    // lista vazia
     if (!pedido->first || !pedido->last) return;
 
-    Celula *auxiliar = pedido->first;
+    Celula *auxiliar = pedido->first, *anterior = NULL;
     // se for o primeiro
     if (strcmp(RetornaNome(pedido->first->produto), prod) == 0) {
         auxiliar = auxiliar->next;
@@ -123,17 +124,14 @@ void RetiraProdutoPedido (TPedido* pedido, char* prod) {
     }
 
     // demais produtos
-    while (auxiliar) {
+    for (auxiliar = pedido->first; auxiliar; auxiliar = auxiliar->next) {
         if (strcmp(RetornaNome(auxiliar->produto), prod) == 0) {
-            auxiliar = auxiliar->next;
-            free(pedido->first);
-            pedido->first = auxiliar;
+            anterior->next = auxiliar->next;
+            free(auxiliar);
             return;
         }
-        auxiliar = auxiliar->next;
+        anterior = auxiliar;
     }
-
-
 }
 
 //A função envia pedido verifica se há restrição calórica ou restrição alimentar
@@ -166,6 +164,7 @@ int EnviaPedido (TPedido* pedido, int restricao_calorica, char* restricao_alimen
             printf("Pedido não Enviado! Restricao alimentar no produto: %s\n", RetornaNome(auxiliar->produto));
             return 0;
         }
+        auxiliar = auxiliar->next;
     }
 
     auxiliar = pedido->first;
