@@ -50,13 +50,11 @@ int main() {
     
     //tenta retirar o John da lista turma1
     john = Retira (turma1, 99);
-    
     if (john == NULL)
         printf ("\n O Aluno John não se encontra na Turma1 \n");
     
     //retira agora o john da turma2
     john = Retira (turma2, 99);
-    
     if (john == NULL)
         printf ("\n O Aluno John não se encontra na Turma2 \n");
     
@@ -74,39 +72,29 @@ int main() {
     //Declara uma nova lista
     TLista* mix;
     
-    //Faz o merge entre as duas turmas
+    // //Faz o merge entre as duas turmas
     mix = Merge (turma1, turma2);
     
-    //Imprime a lista merge (ainda com alunos repetidos
+    // //Imprime a lista merge (ainda com alunos repetidos
     printf ("\n Imprimindo a turma merge (ainda com alunos repetidos): \n");
     Imprime (mix);
     
-    //Retira as ocorrencias duplicadas da lista completa
+    // //Retira as ocorrencias duplicadas da lista completa
     RetiraRepetidos (mix);
     
-    //Imprime a lista merge sem repeticoes
+    // //Imprime a lista merge sem repeticoes
     printf ("\n Imprimindo a turma merge (sem repeticoes): \n");
     Imprime (mix);
     
-    //libera o espaço alocado para o aluno John
-    //LiberaAluno (john);
+    // //libera o espaço alocado para o aluno John
+    LiberaAluno (john);
     
-    //libera o espaço alocado para o aluno patricia
-    //LiberaAluno (patricia);
+    // //libera o espaço alocado para o aluno patricia
+    LiberaAluno (patricia);
     
     //Liberando as memorias (use o valgrind!)
     LiberaLista (mix);
     LiberaLista (turma1);
     LiberaLista (turma2);
-
-    //Liberando os demais alunos, pois na lista ficou errado
-    LiberaAluno(patricia);
-    LiberaAluno(maria);
-    LiberaAluno(joao);
-    LiberaAluno(eduardo);
-    LiberaAluno(lucas);
-    LiberaAluno(john);
-    LiberaAluno(fulano);
-    LiberaAluno(simone);
 }
 

@@ -37,7 +37,7 @@ TLista* CriaLista() {
  * pre-condicao: nome e matricula validos
  * pos-condicao: tipo TAluno criado, com os campos nome e matricula COPIADOS */
 TAluno* InicializaAluno(char* nome, int matricula) {
-    if (!nome) return;
+    if (!nome) return NULL;
 
     TAluno *aluno = malloc(sizeof(TAluno));
     aluno->matricula = matricula;
@@ -80,7 +80,7 @@ TAluno* Retira (TLista* lista, int mat) {
     if (!lista->first && !lista->last) return NULL;
 
     Celula *auxiliar, *anterior;
-    TAluno *aluno;
+    TAluno *aluno = NULL;
 
     // se o primeiro
     if (lista->first->aluno->matricula == mat) {
@@ -103,7 +103,7 @@ TAluno* Retira (TLista* lista, int mat) {
         auxiliar = auxiliar->next;
     }
 
-    return NULL;
+    return aluno;
 }
 
 /* Retira as repeticoes na lista. Ou seja, deixa apenas uma referencia para cada aluno na lista
@@ -157,6 +157,23 @@ TLista* Merge (TLista* turma1, TLista* turma2) {
             break;
     }
 
+    Celula *auxiliar;
+    auxiliar = turma1->first;
+    RetiraRepetidos(turma1);
+    while (auxiliar) {
+        auxiliar = auxiliar->next;
+        free(turma1->first);
+        turma1->first = auxiliar;
+    }
+
+    RetiraRepetidos(turma2);
+    auxiliar = turma2->first;
+    while (auxiliar) {
+        auxiliar = auxiliar->next;
+        free(turma2->first);
+        turma2->first = auxiliar;
+    }
+
     return ans;
 }
 
@@ -170,7 +187,6 @@ void LiberaAluno (TAluno* aluno) {
 
     free(aluno->nome);
     free(aluno);
-    aluno = NULL;
 }
 
 /*Imprime os dados de todos os alunos da lista
@@ -196,10 +212,11 @@ void Imprime (TLista* lista) {
 void LiberaLista (TLista* lista) {
     if (!lista) return;
 
+    RetiraRepetidos(lista);
     Celula *auxiliar = lista->first;
     while (auxiliar) {
         auxiliar = auxiliar->next;
-        //LiberaAluno(lista->first->aluno); // erro pois o aluno ja foi liberado
+        LiberaAluno(lista->first->aluno);
         free(lista->first);
         lista->first = auxiliar;
     }
