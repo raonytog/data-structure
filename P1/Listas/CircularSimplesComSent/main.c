@@ -9,11 +9,22 @@ int main () {
     Push(lista, "Hello");
     Push(lista, "World");
     Push(lista, "ola");
+    Push(lista, "atuamalaca");
+    Push(lista, "teste? testando?");
     Imprime(lista);
 
     Pop(lista, "ola");
     Imprime(lista);
 
+    Pop(lista, "atuamalaca");
+    Pop(lista, "teste? testando?");
+    Imprime(lista);
+
+    Pop(lista, "Hello");
+    Pop(lista, "World");
+    Push(lista, "Adeus!");
+    Imprime(lista);
+    
     Libera(lista);
     return 0;
 }

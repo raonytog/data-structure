@@ -45,8 +45,12 @@ void Pop(Lista *lista, char *palavra) {
     // se for o primeiro
     if (strcmp(lista->first->palavra, palavra) == 0) {
         auxiliar = lista->first;
-        lista->last->next = lista->first->next;
         lista->first = lista->first->next;
+        if (lista->first == lista->last) {
+            lista->first->next = NULL;
+        }
+
+        if (lista->first == NULL) lista->last = NULL;
 
         free(auxiliar->palavra);
         free(auxiliar);
@@ -64,7 +68,9 @@ void Pop(Lista *lista, char *palavra) {
         if (strcmp(auxiliar->palavra, palavra) == 0) {
             temp = auxiliar;
             ant->next = auxiliar->next;
-            auxiliar = auxiliar->next;
+            if (auxiliar == lista->last) 
+                lista->last = ant;
+            auxiliar = ant;
             free(temp->palavra);
             free(temp);
 
@@ -80,7 +86,7 @@ void Libera(Lista *lista) {
 
     Celula *auxiliar = lista->first->next, *secundario = NULL;
     if (lista->first) {
-        while (auxiliar != lista->first) {
+        while ((auxiliar != lista->first) && auxiliar) {
             secundario = auxiliar;
             auxiliar = auxiliar->next;
             free(secundario->palavra);
@@ -99,7 +105,7 @@ void Imprime(Lista *lista) {
         printf("%s\n", lista->first->palavra);
 
         Celula *auxiliar = lista->first->next;
-        while (auxiliar != lista->first) {
+        while ((auxiliar != lista->first) && auxiliar) {
             printf("%s\n", auxiliar->palavra);
             auxiliar = auxiliar->next;
         }
