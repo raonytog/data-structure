@@ -11,5 +11,7 @@ Lista *InsereLista(Lista *lista, int item);
 
 void ImprimeLista(Lista *lista);
 
+void LiberaLista(Lista *lista);
+
 
 #endif //  _LISTA_H_

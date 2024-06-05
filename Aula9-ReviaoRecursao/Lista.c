@@ -45,3 +45,11 @@ void ImprimeLista(Lista *lista) {
     printf("%d\n", lista->item);
     ImprimeLista(lista->next);
 }
+
+void LiberaLista(Lista *lista) {
+    if (!lista) return;
+    Lista *auxiliar = lista->next;
+    free(lista);
+
+    if (auxiliar) LiberaLista(auxiliar);
+}
