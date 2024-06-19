@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "pilhaduplaarray.h": "c",
-        "pedido.h": "c"
+        "pedido.h": "c",
+        "btree.h": "c"
     }
 }
