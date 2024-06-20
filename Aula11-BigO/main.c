@@ -56,6 +56,21 @@ int linearSearch(int *vet, int target) {
     return 0;
 }
 
+int binarySearch (int *vet, int target) {
+    int low = vet[0], high = vet[MAX-1], mid = 0;
+
+    while (low <= high) {
+        mid = low + (high - low)/2;
+
+        if (vet[mid] == target) return 1;
+        if (vet[mid] < target) low = mid + 1;
+
+        else high = mid - 1;
+    }
+
+    return -1;
+}
+
 int main () {
     int vet[MAX], request = -1;
 
