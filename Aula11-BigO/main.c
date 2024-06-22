@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-#define MAX 1000000
+#define MAX 1000
 
 void fillVector(int *vet) {
     for (int i = 0; i < MAX; i++)
@@ -68,7 +68,7 @@ int binarySearch (int *vet, int target) {
         else high = mid - 1;
     }
 
-    return -1;
+    return 0;
 }
 
 int main () {
@@ -79,12 +79,12 @@ int main () {
     //bubbleSort(vet);
     quickSort(MAX, vet);
 
-    printVector(vet);
+    //printVector(vet);
 
-    if (request = linearSearch(vet, 8)) printf("Found\n");
+    if (linearSearch(vet, 0)) printf("Found\n");
     else printf("Not found\n");
 
-    if (request = binarySearch(vet, 8)) printf("Found\n");
+    if (binarySearch(vet, 0)) printf("Found\n");
     else printf("Not found\n");
 
 
