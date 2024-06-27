@@ -16,8 +16,6 @@ int main() {
     Aluno *raony = CriaAluno("raony", 10);
     Aluno *patricia = CriaAluno("patricia", 15);
 
-
-
     Arv *node = NULL;
     node = insere_aluno_arvore(node, marcela);
     node = insere_aluno_arvore(node, raony);
