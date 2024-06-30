@@ -3,7 +3,7 @@
 
 typedef struct Node Node;
 
-Node *create_node(int num);
+Node *create_node(int value);
 
 void insert_node_tree(Node *a, Node *sa);
 

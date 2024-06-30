@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+/** Entendi nada deste dever */
+
 int main() {
     Node *n1 = create_node(10);
     Node *n2 = create_node(20);
@@ -18,7 +20,7 @@ int main() {
 
     print_tree(n1);
 
-    printf("\nEncontrado? %d\n", search(n1, 20));
+    // printf("\nEncontrado? %d\n", search(n1, 20));
 
-    destroy_tree(n1);
+    // destroy_tree(n1);
 }
