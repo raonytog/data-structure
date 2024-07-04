@@ -38,7 +38,7 @@ void quickSort (int n, int *vet) {
             int temp = vet[a];
             vet[a] = vet[b];
             vet[b] = temp;
-            a++; b--; 
+            a++; b--;
         }
     } while (a <= b);
 

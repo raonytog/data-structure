@@ -28,46 +28,74 @@ Tree *CreateTree(void* data, Tree *left, Tree *right,
     return new;
 }
 
-Tree *InsertOnTree(void *data, Tree *node, func_print imprime, 
-                   func_destroy destroi, func_compare_tree_node compara) {
-    if (node == NULL) {
-        node = CreateTree(data, NULL, NULL, imprime, destroi, compara);
-        return node;
-    }
+Tree *InsertOnTree(void *data, Tree *node, void (*imprime)(void *),
+                   void (*destroi)(void *), int (*compara)(void *, void *)) {
+    /** Se nao existe, cria */
+    if (node == NULL)
+        return CreateTree(data, NULL, NULL, imprime, destroi, compara);
 
-    if (node->compare_tree_node(node->data, data) <= 0) 
-        node->right = InsertOnTree(node->right, data, node->print_tree,
-                                   node->destroy_tree, node->compare_tree_node);
+    /** Se existir, verificar o valor para insercao na esquerda ou direita */
+    else if (compara(node->data, data) < 0)
+        node->right = InsertOnTree(data, node->right, imprime, destroi, compara);
 
-    else if (node->compare_tree_node(node->data, data) > 0)
-        node->left = InsertOnTree(node->left, data, node->print_tree,
-                                  node->destroy_tree, node->compare_tree_node);
+    else 
+        node->left = InsertOnTree(data, node->left, imprime, destroi, compara);
 
     return node;
 }
 
 Tree *RemoveOnTree(void *data, Tree *node) {
+    if (!node) return NULL;
 
+    Tree *info = BinarySearch(data, node);
+
+    /** Se nao tiver filhos */
+    if (node->right == NULL && node->left == NULL) 
+        free(node);
+
+    /** Se so tiver um filho */
+    else if (node->right == NULL) {
+        Tree *auxiliar = node;
+        node = node->left;
+        free(auxiliar);
+    }
+
+    else if (node->left == NULL) {
+        Tree *auxiliar = node;
+        node = node->right;
+        free(auxiliar);
+    }
+
+    /** Se tiver dois filhos */
+    Tree *auxiliar = node->left;
+    while (auxiliar->right != NULL)
+        auxiliar = auxiliar->right;
+    
+    /**  */
+    void *info = node->data;
+    node->data = auxiliar->data;
+    auxiliar->data = info;
+    node->left = RemoveOnTree(data, node->left);
 }
 
 Tree *BinarySearch(void *data, Tree *node) {
-    if (!data) return;
+    if (!data || !node) return NULL;
 
     if (node->compare_tree_node(node->data, data) == 0)
         return node;
 
-    else if (node->compare_tree_node(node->data, data) > 0)
+    else if (node->compare_tree_node(node->data, data) < 0)
         return BinarySearch(data, node->right);
-
-    else return BinarySearch(data, node->left);
+    
+    return BinarySearch(data, node->left);
 }
 
 void PrintTree(Tree *node) {
     printf("<");
     if (node) {
-        node->print_tree(node);
-        node->print_tree(node->right);
-        node->print_tree(node->left);
+        node->print_tree(node->data);
+        PrintTree(node->right);
+        PrintTree(node->left);
     }
     printf(">");
 }
