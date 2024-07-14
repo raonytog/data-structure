@@ -1,16 +1,20 @@
 #ifndef _HASH_H_
 #define _HASH_H_
 
-#include "palavra.h"
+typedef struct cell Cell;
+typedef struct hash Hash;
 
-typedef struct Hash Hash;
+Hash *initHash(int size);
 
-Hash *InicializaHash(int size);
+int hashFunction(char *palavra, int size);
 
-void InsereHash(Hash *h, Palavra *p);
+void insertHash(Hash *hashTable, char *palavra);
 
-Palavra *BuscaPalavra(Hash *h, char *string);
+void printHash(Hash *hashTable);
 
-void LiberaHash(Hash *h);
+void destroyHash(Hash *hashTable);
 
-#endif
+void ImprimeCelula(Cell *celula);
+void LiberaCelula(Cell *celula);
+
+#endif 

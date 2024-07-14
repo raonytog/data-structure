@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "palavra.h": "c",
+        "string.h": "c",
+        "stdio.h": "c",
+        "hash.h": "c"
+    }
+}

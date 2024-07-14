@@ -1,53 +1,110 @@
-#include "hash.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-struct Hash {
-    Palavra **palavras;
-    int size;
+#include "hash.h"
+#include "palavra.h"
+
+struct cell{
+    Palavra *word;
+    Cell *next;
 };
 
-Hash *InicializaHash(int size) {
+struct hash {
+    Cell **table;
+    int max_size, actual_size;
+};
+
+Hash *initHash(int size) {
+    if (size <= 0) return NULL;
+
     Hash *new = malloc(sizeof(Hash));
-    new->palavras = malloc(size * sizeof(Palavra*));
-    new->size = size;
+    new->max_size = size;
+    new->actual_size = 0;
+    new->table = calloc(new->max_size, sizeof(Cell*));
 
-    for (int i = 0; i < size; i++)
-        new->palavras[i] = NULL;
+    return new;
 }
 
-void InsereHash(Hash *h, Palavra *p) {
-    if (!h || !p) return;
-    
-    int idx = hash_table(RetornaPalavra(p), h->size);
-    if (h->palavras[idx]) {
-        // InserePalavra();
-    }
-
-}
-
-static int hash_table(char *string, int size) {
-    if (!string) return -1;
+int hashFunction(char *palavra, int size) {
+    if (!palavra || size <= 0) return -1;
 
     int total = 0;
-    for (int i = 0; i < strlen(string); i++)
-        total += string[i];
+    for (int i = 0; i < strlen(palavra); i++) {
+        total += palavra[i];
+    }
 
     return total % size;
 }
 
-Palavra *BuscaPalavra(Hash *h, char *string) {
+void insertHash(Hash *hashTable, char *palavra) {
+    if (!palavra || !hashTable) return;
 
+    int idx = hashFunction(palavra, hashTable->max_size);
+    Cell *auxiliar = hashTable->table[idx];
+
+    /** 
+     * percorre ate o ultimo no da lista de palavras com mesmo somatorio ascii
+     */
+    while (auxiliar) {
+        if (strcmp(palavra, retornaPalavra(auxiliar->word)) == 0) {
+            incrementaFrequencia(auxiliar->word);
+            break;
+        }
+        else auxiliar = auxiliar->next;
+    }
+
+    /** 
+     * se nao achar a palavra la, quer dizer que nao existe
+     * portanto, cria-se e insere a mesma na lista de palavras
+     * com mesmo indice na hash
+     */
+    if (auxiliar == NULL) {
+        Cell *new = malloc(sizeof(Cell));
+        new->word = criaPalavra(palavra);
+        new->next = hashTable->table[idx];
+
+        hashTable->table[idx] = new;
+        hashTable->actual_size++;
+    }
 }
 
-void LiberaHash(Hash *h) {
-    if (!h) return;
+void printHash(Hash *hashTable) {
+    if (!hashTable) return;
 
-    for (int i = 0; i < h->size; i++)
-        if (h->palavras[i] != NULL) LiberaPalavra(h->palavras[i]);
+    for (int i = 0; i < hashTable->max_size; i++) {
+        if (hashTable->table[i] != NULL) { 
+            ImprimeCelula(hashTable->table[i]);
+            printf("\n");
+        }
+    }
+}
 
-    free(h->palavras);
-    free(h);
+void destroyHash(Hash *hashTable) {
+    if (!hashTable) return;
+
+    for (int i = 0; i < hashTable->max_size; i++)
+        LiberaCelula(hashTable->table[i]);
+
+    free(hashTable->table);
+    free(hashTable);
+}
+
+void LiberaCelula(Cell *celula) {
+    if (!celula) return;
+
+    Cell *auxiliar = celula->next;
+    while (celula) {
+        liberaPalavra(celula->word);
+        free(celula);
+        celula = auxiliar;
+        auxiliar = auxiliar->next;
+    }
+}
+
+void ImprimeCelula(Cell *celula) {
+    if (!celula) return;
+
+    printf("(%s, %d) ", retornaPalavra(celula->word), retornaFrequencia(celula->word));
+    ImprimeCelula(celula->next);
 }

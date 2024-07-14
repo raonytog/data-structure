@@ -1,46 +1,45 @@
-#include "palavra.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-struct Palavra {
+#include "palavra.h"
+
+struct palavra {
     char *palavra;
-    int n;
-    struct Palavra *next;
+    int frequencia;
 };
 
-Palavra *InicPalavra(char *pal) {
+Palavra *criaPalavra(char *string) {
+    if (!string) return NULL;
+
     Palavra *new = malloc(sizeof(Palavra));
-    new->palavra = strdup(pal);
-    new->n = 1;
-    new->next = NULL;
+    new->palavra = strdup(string);
+    new->frequencia = 1;
     return new;
 }
 
-char *RetornaPalavra(Palavra *pal) {
-    if (!pal) return '\0';
-    return pal->palavra;
+char *retornaPalavra(Palavra *palavra) {
+    if (!palavra) return '\0';
+    return palavra->palavra;
 }
 
-int RetornaOcorrencias(Palavra *pal) {
-    if (!pal) return -1;
-    return pal->n;
+int retornaFrequencia(Palavra *palavra) {
+    if (!palavra) return -1;
+    return palavra->frequencia;
 }
 
-void IncrementaOcorrencia(Palavra *pal) {
-    if (!pal) return;
-    pal->n++;
+void incrementaFrequencia(Palavra *palavra) {
+    if (!palavra) return;
+    palavra->frequencia++;
 }
 
-Palavra *LiberaPalavra(Palavra *pal) {
-    if (pal) {
-        free(pal->palavra);
-        if (pal->next != NULL) return LiberaPalavra(pal->next);
-        free(pal);
-    }
-    return NULL;
+void imprimePalavra(Palavra *palavra) {
+    if (!palavra) return;
+    printf("%s", palavra->palavra);
 }
 
-
-
+void liberaPalavra(Palavra *palavra) {
+    if (!palavra) return;
+    free(palavra->palavra);
+    free(palavra);
+}

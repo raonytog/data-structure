@@ -1,16 +1,18 @@
 #ifndef _PALAVRA_H_
 #define _PALAVRA_H_
 
-typedef struct Palavra Palavra;
+typedef struct palavra Palavra;
 
-Palavra *InicPalavra(char *pal);
+Palavra *criaPalavra(char *string);
 
-char *RetornaPalavra(Palavra *pal);
+char *retornaPalavra(Palavra *palavra);
 
-int RetornaOcorrencias(Palavra *pal);
+int retornaFrequencia(Palavra *palavra);
 
-void IncrementaOcorrencia(Palavra *pal);
+void incrementaFrequencia(Palavra *palavra);
 
-Palavra *LiberaPalavra(Palavra *pal);
+void imprimePalavra(Palavra *palavra);
 
-#endif
+void liberaPalavra(Palavra *palavra);
+
+#endif // !_PALAVRA_H_
