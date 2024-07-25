@@ -3,39 +3,7 @@
 #include <string.h>
 
 #include "btree.h"
-// #include "aluno.h"
 #include "loja.h"
-
-// int main () {
-//     Aluno *malu = CriaAluno("malu", 9);
-//     Aluno *raony = CriaAluno("raony", 10);
-//     Aluno *marcela = CriaAluno("marcela", 11);
-//     Aluno *barbara = CriaAluno("barbara", 20);
-
-//     Tree *treeNode = NULL;
-//     treeNode = InsertOnTree(raony, treeNode, ImprimeAluno, LiberaAluno, ComparaID);
-//     treeNode = InsertOnTree(malu, treeNode, ImprimeAluno, LiberaAluno, ComparaID);
-//     treeNode = InsertOnTree(marcela, treeNode, ImprimeAluno, LiberaAluno, ComparaID);
-//     treeNode = InsertOnTree(barbara, treeNode, ImprimeAluno, LiberaAluno, ComparaID);
-
-//     PrintTree(treeNode);
-//     printf("\n");
-
-//     Tree *encontrado = BinarySearch(barbara, treeNode);
-//     if (encontrado) {
-//         PrintTree(encontrado);
-//         printf("\n");
-//     }
-
-//     LiberaTree(treeNode);
-
-//     LiberaAluno(raony);
-//     LiberaAluno(barbara);
-//     LiberaAluno(malu);
-//     LiberaAluno(marcela);
-
-//     return 0;
-// }
 
 int main () {
     Loja *padaria = CriaLoja("padaria", 8, 200);
@@ -51,6 +19,19 @@ int main () {
 
     PrintTree(treeNode);
     printf("\n");
+
+    Tree *find = BinarySearch(padaria, treeNode);
+    PrintTree(find);
+    printf("\n");
+
+    RemoveOnTree(supermercado, treeNode);
+    PrintTree(treeNode);
+    printf("\n");
+
+    LiberaLoja(padaria);
+    LiberaLoja(farmacia);
+    LiberaLoja(supermercado);
+    LiberaLoja(bar);
 
     return 0;
 }

@@ -50,20 +50,24 @@ Tree *RemoveOnTree(void *data, Tree *node) {
     Tree *info = BinarySearch(data, node);
 
     /** Se nao tiver filhos */
-    if (node->right == NULL && node->left == NULL) 
+    if (node->right == NULL && node->left == NULL) {
         free(node);
+        return NULL;
+    }
 
     /** Se so tiver um filho */
     else if (node->right == NULL) {
         Tree *auxiliar = node;
         node = node->left;
         free(auxiliar);
+        return auxiliar;
     }
 
     else if (node->left == NULL) {
         Tree *auxiliar = node;
         node = node->right;
         free(auxiliar);
+        return auxiliar;
     }
 
     /** Se tiver dois filhos */
@@ -71,11 +75,12 @@ Tree *RemoveOnTree(void *data, Tree *node) {
     while (auxiliar->right != NULL)
         auxiliar = auxiliar->right;
     
-    /**  */
-    void *info = node->data;
+
     node->data = auxiliar->data;
-    auxiliar->data = info;
+    auxiliar->data = data;
     node->left = RemoveOnTree(data, node->left);
+
+    return node;
 }
 
 Tree *BinarySearch(void *data, Tree *node) {
