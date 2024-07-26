@@ -65,8 +65,8 @@ void HashSearch(Hash *hashtable, char *key, char value) {
 Hash *InsertHash(Hash *hashtable, Pessoa *pessoa) {
     if (!hashtable || !pessoa) return NULL;
 
+    /** Acha o indice e percorre ate o final da lista no indice */
     int idx = HashFunction(getNomePessoa(pessoa), hashtable->max);
-
     Celula *auxiliar = hashtable->pessoa[idx];
     while (auxiliar) 
         auxiliar = auxiliar->next;
@@ -79,6 +79,8 @@ Hash *InsertHash(Hash *hashtable, Pessoa *pessoa) {
         hashtable->pessoa[idx] = new;
         hashtable->atual++; 
     }
+
+    return hashtable;
 }
 
 void PrintHash(Hash *hashtable) {
@@ -101,9 +103,9 @@ void DestroyCelula(Celula *cell) {
 
     Celula *auxiliar = cell;
     while (auxiliar) {
+        auxiliar = auxiliar->next;
         DestroiPessoa(cell->pessoa);
         free(cell);
-        auxiliar = auxiliar->next;
         cell = auxiliar;
     }
 }
