@@ -29,8 +29,10 @@ Hash *InitHash(int max_size) {
 void *HashSearch(Hash *hashtable, void *key, hfunction hash_func, compare compare_func) {
     if (!hashtable || !key) return NULL;
 
+    /** Procura o indice do ojbeto */
     int idx = hash_func(key, hashtable->max);
 
+    /** Percorre todos os objetos do indice, ate encontrar o desejado */
     Cell *auxiliar = hashtable->data[idx];
     while (auxiliar) {
         if (compare_func(auxiliar->data, key) == 0) return auxiliar->data;
@@ -41,20 +43,26 @@ void *HashSearch(Hash *hashtable, void *key, hfunction hash_func, compare compar
 void HashInsert(Hash *hashtable, void *key, void *object, hfunction hash_func) {
     if (!hashtable || !object) return;
 
+    /** Procura o indice do ojbeto */
     int idx = hash_func(key, hashtable->max);
 
+    /** Vai ate o final da lista do objeto com mesmo indice */
     Cell *auxiliar = hashtable->data[idx];
     while (auxiliar)
         auxiliar = auxiliar->next;
     
-    if (auxiliar == NULL) {
-        Cell *new = malloc(sizeof(Cell));
-        new->data = object;
-        new->next = hashtable->data[idx];
+    /** 
+     * uando chegar no fim, o mesmo sera NULL
+     * basta entao criar a nova celula e preenche-la 
+     * como primeira da lista, e também incrementar o tamanho
+     * da hash
+     */
+    Cell *new = malloc(sizeof(Cell));
+    new->data = object;
+    new->next = hashtable->data[idx];
 
-        hashtable->data[idx] = new;
-        hashtable->real++;
-    }
+    hashtable->data[idx] = new;
+    hashtable->real++;
 }
 
 void LiberaCelula(Cell *c) {

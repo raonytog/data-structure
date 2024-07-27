@@ -3,7 +3,6 @@
 
 typedef struct Hash Hash;
 
-
 typedef int(*compare)(void*, void*); /* compare(type *object1, type *object2) */
 typedef int(*hfunction)(void*, int); /* hash(char *key, char *maxSize) */
 typedef void(*destroy)(void*); /*libera(type *object) */
