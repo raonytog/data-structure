@@ -1,37 +1,99 @@
 #include "genHash.h"
 
-struct hash {
-    void **data;
-    size_t max_size;
-    size_t real_size;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct Cell Cell;
+
+struct Cell {
+    void *data;
+    Cell *next;
 };
 
-Hash *InitHashTable(size_t size, size_t object_size) {
-    if (size <= 0 || object_size <= 0) return NULL;
+struct Hash {
+    Cell **data;
+    int max, real;
+};
+
+Hash *InitHash(int max_size) {
+    if (max_size<=0) return NULL;
 
     Hash *new = malloc(sizeof(Hash));
-    new->max_size = size;
-    new->real_size = 0;
-
-    new->data = calloc(size, sizeof(object_size));
-    for (size_t i = 0; i < size; i++)
-        new->data[i] = calloc(1, sizeof(object_size));
-
+    new->data = calloc(max_size, sizeof(Cell));
+    new->max = max_size;
+    new->real = 0;
     return new;
 }
 
-void *HashSearch(Hash *hash_table, 
-                int(*hash_function)(void*), int(*compare)(void*, void*)) {
-    if (!hash_table || !hash_function || !compare) return;
+void *HashSearch(Hash *hashtable, void *key, hfunction hash_func, compare compare_func) {
+    if (!hashtable || !key) return NULL;
 
+    int idx = hash_func(key, hashtable->max);
 
+    Cell *auxiliar = hashtable->data[idx];
+    while (auxiliar) {
+        if (compare_func(auxiliar->data, key) == 0) return auxiliar->data;
+        auxiliar = auxiliar->next;
+    }
 }
 
-void *InsertHash(Hash *hash_table, void *data, 
-                int(*hash_function)(void*), int(*compare)(void*, void*));
+void HashInsert(Hash *hashtable, void *key, void *object, hfunction hash_func) {
+    if (!hashtable || !object) return;
 
-void DestroyHash(Hash *hash_table);
+    int idx = hash_func(key, hashtable->max);
 
-void PrintHash(Hash *hash_table, void(*print_function)(void*)) {
+    Cell *auxiliar = hashtable->data[idx];
+    while (auxiliar)
+        auxiliar = auxiliar->next;
+    
+    if (auxiliar == NULL) {
+        Cell *new = malloc(sizeof(Cell));
+        new->data = object;
+        new->next = hashtable->data[idx];
 
+        hashtable->data[idx] = new;
+        hashtable->real++;
+    }
+}
+
+void LiberaCelula(Cell *c) {
+    if (!c) return;
+
+    Cell *auxiliar = c;
+    while (auxiliar) {
+        auxiliar = auxiliar->next;
+        free(c);
+        c = auxiliar;
+    }
+}
+
+void LiberaHash(Hash *hashtable) {
+    if (!hashtable) return;
+
+    for (int i = 0; i < hashtable->max; i++) {
+        LiberaCelula(hashtable->data[i]);
+    }
+    free(hashtable->data);
+    free(hashtable);
+}
+
+void imprimeCell(Cell *c, printhash print) {
+    if (!c) return;
+
+    Cell *auxiliar = c;
+    while (auxiliar) {
+        print(auxiliar->data);
+        auxiliar = auxiliar->next;
+    }
+}
+
+void ImprimeHash(Hash *hashtable, printhash print_func) {
+    if (!hashtable) return;
+    
+    printf("Imprimindo a tabela hash:\n");
+    for (int i = 0; i < hashtable->max; i++) {
+        imprimeCell(hashtable->data[i], print_func);
+    }
+    printf("\n");
 }
