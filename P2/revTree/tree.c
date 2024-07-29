@@ -35,15 +35,16 @@ Tree *InsertOnTree(Tree *treeNode, char *word) {
 Tree *RemoveFromTree(Tree *treeNode, char *word) {
     if (!treeNode || !word) return NULL;
 
+    /** Encontra o node com a palavra requisitada */
     if (strlen(treeNode->word) < strlen(word)) 
         treeNode->right = RemoveFromTree(treeNode->right, word);
 
-    else if (strlen(word) < strlen(treeNode->word))
+    else if (strlen(treeNode->word) > strlen(word))
         treeNode->left = RemoveFromTree(treeNode->left, word);
 
     /** Caso 1: 0 filhos */
     if (treeNode->left == NULL && treeNode->right == NULL) {
-        free(treeNode->word);
+        // free(treeNode->word);
         free(treeNode);
         treeNode = NULL;
     }
@@ -63,19 +64,18 @@ Tree *RemoveFromTree(Tree *treeNode, char *word) {
         free(auxiliar);
     }
 
-    /** Caso 3: 2 filhos */
+    /** Caso 3: dois filhos */
     else {
         Tree *auxiliar = treeNode->left;
         while (auxiliar->right) auxiliar = auxiliar->right;
 
-        char reserva[100]; strcpy(reserva, treeNode->word);
+        char palavra[100]; strcpy(palavra, treeNode->word);
         treeNode->word = auxiliar->word;
-        auxiliar->word = reserva;
+        auxiliar->word = palavra;
         treeNode->left = RemoveFromTree(treeNode->left, word);
     }
 
     return treeNode;
-
 }
 
 Tree *SearchOnTree(Tree *treeNode, char *word) {
