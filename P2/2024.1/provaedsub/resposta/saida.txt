@@ -1,0 +1,7 @@
+gomes 1
+togneri 1
+raony 2
+------------------------
+3 palavras distintas encontradas
+4 palavras no total
+raony é a palavra de maior frequência (2)
