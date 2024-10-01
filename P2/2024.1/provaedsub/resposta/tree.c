@@ -64,7 +64,6 @@ Tree *PrintTree(Tree *treeNode) {
         printf("%s %d ", treeNode->palavra, treeNode->freq);
         PrintTree(treeNode->left);
         PrintTree(treeNode->right);
-
     }
     printf(">");
 }
