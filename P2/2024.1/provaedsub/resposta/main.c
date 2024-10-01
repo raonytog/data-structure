@@ -14,15 +14,11 @@ int main() {
     char palavra[100];
     while (fscanf(fEntrada, "%s ", palavra) == 1) {
         auxiliar = BinarySearch(arvore, palavra);
-        if (auxiliar) {
-            incFrequencia(auxiliar);
-        
-        } else {
-            arvore = InsertTree(arvore, palavra);
-        }
+        if (auxiliar) incFrequencia(auxiliar);
+        else arvore = InsertTree(arvore, palavra);
     }
+    
     int qtd = qtdPalavrasDistintas(arvore);
-
     int idx = 0;
     Tree **vetor = malloc(qtd * sizeof(Tree**));
     PreencheVetor(arvore, vetor, &idx);
